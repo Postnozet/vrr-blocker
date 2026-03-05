@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.vrr-blocker" path="/org/gnome/shell/extensions/vrr-blocker/">
+    <key name="blacklist" type="as">
+      <default>[]</default>
+    </key>
+  </schema>
+</schemalist>

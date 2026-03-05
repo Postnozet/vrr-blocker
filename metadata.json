@@ -1,0 +1,9 @@
+{
+  "uuid": "vrr-blocker@postnozet",
+  "name": "VRR Blocker",
+  "description": "An extension for GNOME Shell that blocks VRR (Variable Refresh Rate) for blacklisted apps by their WM_CLASS. It is mainly useful for preventing stuttering in browsers and video players when in fullscreen with VRR enabled.",
+  "shell-version": ["48", "49", "50"],
+  "settings-schema": "org.gnome.shell.extensions.vrr-blocker",
+  "url": "https://github.com/Postnozet/vrr-blocker",
+  "version": 1
+}
