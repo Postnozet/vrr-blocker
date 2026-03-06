@@ -36,16 +36,16 @@ glib-compile-schemas schemas/
 ```
 
 ### 6. Enable the extension
-Log out/in, then enable it.
+Restart the session and enable it via an extension manager or using the command.
 ```bash
 gnome-extensions enable vrr-blocker@postnozet
 ```
 
 ## Usage
 Open the extension settings and add WM_CLASS values to the blacklist.
+```bash
+gnome-extensions prefs vrr-blocker@postnozet
+```
 
 ## Compatibility
 Tested and works on GNOME Shell 48, 49 and 50.
-
-## License
-This project is licensed under the GPL-3.0 License.
