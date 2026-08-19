@@ -7,28 +7,74 @@ export default class VrrBlockerPrefs extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const settings = this.getSettings();
         const prefsWindow = new Adw.PreferencesPage();
-        
+
         // Settings
         const settingsGroup = new Adw.PreferencesGroup({
             title: "Blacklisted Apps"
         });
-        const blacklistEntry = new Adw.EntryRow({
-            title: "WM_CLASS values (comma separated)"
+
+        const addRow = new Adw.EntryRow({
+            title: "Add WM_CLASS…"
         });
-        blacklistEntry.set_text(settings.get_strv('blacklist').join(', '));
-        blacklistEntry.add_css_class("monospace");
-        const saveButton = new Gtk.Button({
-            label: "Save",
-            margin_top: 12,
+        addRow.add_css_class("monospace");
+
+        const addButton = new Gtk.Button({
+            icon_name: "list-add-symbolic",
+            valign: Gtk.Align.CENTER,
+            tooltip_text: "Add"
         });
-        saveButton.add_css_class("suggested-action");
-        saveButton.connect('clicked', () => {
-            let values = blacklistEntry.get_text()
-                .split(',')
-                .map(s => s.trim())
-                .filter(s => s.length > 0);
-            settings.set_strv('blacklist', values);
-        });
+        addButton.add_css_class("flat");
+        addRow.add_suffix(addButton);
+
+        const addEntry = () => {
+            const value = addRow.get_text().trim();
+            if (value.length === 0)
+                return;
+
+            const current = settings.get_strv('blacklist');
+            if (current.includes(value)) {
+                addRow.set_text('');
+                return;
+            }
+
+            settings.set_strv('blacklist', [...current, value]);
+            addRow.set_text('');
+            updateList();
+        };
+
+        addButton.connect('clicked', addEntry);
+        addRow.connect('entry-activated', addEntry);
+
+        const itemRows = [];
+
+        const updateList = () => {
+            for (const row of itemRows)
+                settingsGroup.remove(row);
+            itemRows.length = 0;
+
+            for (const value of settings.get_strv('blacklist')) {
+                const row = new Adw.ActionRow({
+                    title: value
+                });
+                row.add_css_class("monospace");
+
+                const removeButton = new Gtk.Button({
+                    icon_name: "list-remove-symbolic",
+                    valign: Gtk.Align.CENTER,
+                    tooltip_text: "Remove"
+                });
+                removeButton.add_css_class("flat");
+                removeButton.connect('clicked', () => {
+                    const updated = settings.get_strv('blacklist').filter(v => v !== value);
+                    settings.set_strv('blacklist', updated);
+                    updateList();
+                });
+                row.add_suffix(removeButton);
+
+                settingsGroup.add(row);
+                itemRows.push(row);
+            }
+        };
         
         // Help
         const helpGroup = new Adw.PreferencesGroup({
@@ -78,9 +124,9 @@ export default class VrrBlockerPrefs extends ExtensionPreferences {
             wrap: true,
         });
 
-        settingsGroup.add(blacklistEntry);
-        settingsGroup.add(saveButton);
-        
+        settingsGroup.add(addRow);
+        updateList();
+
         helpGroup.add(step1);
         helpGroup.add(step2);
         helpGroup.add(step3);
