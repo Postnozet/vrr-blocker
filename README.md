@@ -1,6 +1,8 @@
 # VRR Blocker
 An extension for GNOME Shell that blocks VRR (Variable Refresh Rate) for blacklisted apps by their WM_CLASS. It is mainly useful for preventing flickering and stuttering in browsers and video players when in fullscreen with VRR enabled.
 
+[<img alt="" height="100" src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true">](https://extensions.gnome.org/extension/9490/vrr-blocker/)
+
 ## Note
 This extension does not directly control VRR, but it disables unredirect fullscreen and keeps the compositor active for blacklisted apps, so VRR will not trigger.
 
