@@ -5,5 +5,5 @@
   "shell-version": ["48", "49", "50", "51"],
   "settings-schema": "org.gnome.shell.extensions.vrr-blocker",
   "url": "https://github.com/Postnozet/vrr-blocker",
-  "version": 3
+  "version": 4
 }
