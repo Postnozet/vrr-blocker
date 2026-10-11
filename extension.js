@@ -82,7 +82,7 @@ export default class VrrBlocker extends Extension {
         
         if (this._isVrrBlocked) {
             global.compositor.enable_unredirect();
-            log('[VRR Blocker] VRR is unblocked.');
+            console.debug('[VRR Blocker] VRR is unblocked.');
             this._isVrrBlocked = false;
         }
     }
